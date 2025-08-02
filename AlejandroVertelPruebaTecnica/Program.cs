@@ -2,6 +2,7 @@ using AlejandroVertelPruebaReImagine.Data;
 using AlejandroVertelPruebaReImagine.Repositories;
 using AlejandroVertelPruebaReImagine.Repositories.IRepositories;
 using AlejandroVertelPruebaTecnica.Mappers;
+using AlejandroVertelPruebaTecnica.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,10 +18,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
 
 // REGISTRA EL REPOSITORIO AQUÍ
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
+builder.Services.AddScoped<IVentaRepository, VentaRepository>();
+builder.Services.AddScoped<IDetalleDeVentaRepository, DetalleDeVentaRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //AutoMapper
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UsuariosMapper>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProductosMapper>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<VentasMapper>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<DetalleDeVentasMapper>());
 
 var app = builder.Build();
 

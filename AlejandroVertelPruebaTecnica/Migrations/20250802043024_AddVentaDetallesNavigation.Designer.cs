@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlejandroVertelPruebaTecnica.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250802000447_UpdateUsuarioIdIdentity")]
-    partial class UpdateUsuarioIdIdentity
+    [Migration("20250802043024_AddVentaDetallesNavigation")]
+    partial class AddVentaDetallesNavigation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,18 +39,20 @@ namespace AlejandroVertelPruebaTecnica.Migrations
                     b.Property<double>("PrecioUnitario")
                         .HasColumnType("double precision");
 
-                    b.PrimitiveCollection<int[]>("ProductoId")
-                        .IsRequired()
-                        .HasColumnType("integer[]");
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("integer");
 
                     b.Property<double>("Total")
                         .HasColumnType("double precision");
 
-                    b.PrimitiveCollection<int[]>("VentaId")
-                        .IsRequired()
-                        .HasColumnType("integer[]");
+                    b.Property<int>("VentaId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.HasIndex("VentaId");
 
                     b.ToTable("DetallesDeVenta");
                 });
@@ -67,9 +69,6 @@ namespace AlejandroVertelPruebaTecnica.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("DetalleDeVentaId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("text");
@@ -78,8 +77,6 @@ namespace AlejandroVertelPruebaTecnica.Migrations
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DetalleDeVentaId");
 
                     b.ToTable("Productos");
                 });
@@ -113,40 +110,40 @@ namespace AlejandroVertelPruebaTecnica.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DetalleDeVentaId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("Fecha")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<double>("Total")
-                        .HasColumnType("double precision");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DetalleDeVentaId");
-
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Ventas");
                 });
 
-            modelBuilder.Entity("AlejandroVertelPruebaReImagine.Models.Entities.Producto", b =>
+            modelBuilder.Entity("AlejandroVertelPruebaReImagine.Models.Entities.DetalleDeVenta", b =>
                 {
-                    b.HasOne("AlejandroVertelPruebaReImagine.Models.Entities.DetalleDeVenta", null)
-                        .WithMany("Producto")
-                        .HasForeignKey("DetalleDeVentaId");
+                    b.HasOne("AlejandroVertelPruebaReImagine.Models.Entities.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AlejandroVertelPruebaReImagine.Models.Entities.Venta", "Venta")
+                        .WithMany("DetallesDeVenta")
+                        .HasForeignKey("VentaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
+
+                    b.Navigation("Venta");
                 });
 
             modelBuilder.Entity("AlejandroVertelPruebaReImagine.Models.Entities.Venta", b =>
                 {
-                    b.HasOne("AlejandroVertelPruebaReImagine.Models.Entities.DetalleDeVenta", null)
-                        .WithMany("Venta")
-                        .HasForeignKey("DetalleDeVentaId");
-
                     b.HasOne("AlejandroVertelPruebaReImagine.Models.Entities.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
@@ -156,11 +153,9 @@ namespace AlejandroVertelPruebaTecnica.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("AlejandroVertelPruebaReImagine.Models.Entities.DetalleDeVenta", b =>
+            modelBuilder.Entity("AlejandroVertelPruebaReImagine.Models.Entities.Venta", b =>
                 {
-                    b.Navigation("Producto");
-
-                    b.Navigation("Venta");
+                    b.Navigation("DetallesDeVenta");
                 });
 #pragma warning restore 612, 618
         }

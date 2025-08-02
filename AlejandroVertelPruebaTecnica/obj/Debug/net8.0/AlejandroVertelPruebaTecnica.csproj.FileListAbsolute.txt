@@ -133,10 +133,11 @@ C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVe
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\Alejandr.95E2141A.Up2Date
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\AlejandroVertelPruebaTecnica.dll
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\refint\AlejandroVertelPruebaTecnica.dll
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\AlejandroVertelPruebaTecnica.pdb
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\AlejandroVertelPruebaTecnica.genruntimeconfig.cache
 C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\ref\AlejandroVertelPruebaTecnica.dll
+C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\AlejandroVertelPruebaTecnica.sourcelink.json
+C:\Users\vvill\OneDrive\Documentos\.NET\AlejandroVertelPruebaTecnica\AlejandroVertelPruebaTecnica\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

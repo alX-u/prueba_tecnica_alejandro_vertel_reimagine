@@ -8,16 +8,15 @@ namespace AlejandroVertelPruebaReImagine.Models.Entities
         public int Id { get; set; }
 
         public int UsuarioId { get; set; }
-
         public Usuario Usuario { get; set; }
 
         public DateTime? Fecha { get; set; }
 
-        public double Total { get; set; }
+        public ICollection<DetalleDeVenta> DetallesDeVenta { get; set; }
 
         public Venta()
         {
-            Fecha ??= DateTime.Now;
+            Fecha ??= DateTime.UtcNow;
         }
     }
 }

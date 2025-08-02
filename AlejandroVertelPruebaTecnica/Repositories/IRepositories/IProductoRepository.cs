@@ -2,11 +2,11 @@
 
 namespace AlejandroVertelPruebaReImagine.Repositories.IRepositories
 {
-    public interface IPproductoRepository
+    public interface IProductoRepository
     {
         Producto CreateProducto(Producto producto);
 
-        ICollection<Producto> GetProductosFiltered(string? search);
+        ICollection<Producto> GetProductosFiltered(string? search, int? pageNumber, int? pageSize, out int totalItems);
 
         Producto GetProducto(int id);
 

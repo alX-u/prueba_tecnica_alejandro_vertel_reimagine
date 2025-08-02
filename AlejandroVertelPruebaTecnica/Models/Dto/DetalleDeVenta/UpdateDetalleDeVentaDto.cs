@@ -6,8 +6,6 @@ namespace AlejandroVertelPruebaReImagine.Models.Dto.DetalleDeVenta
     {
         public int? ProductoId { get; set; }
 
-        public int? VentaId { get; set; }
-
         [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0.")]
         public int? Cantidad { get; set; }
 

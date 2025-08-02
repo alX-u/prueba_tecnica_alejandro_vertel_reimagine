@@ -7,26 +7,24 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlejandroVertelPruebaTecnica.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DetallesDeVenta",
+                name: "Productos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProductoId = table.Column<int[]>(type: "integer[]", nullable: false),
-                    VentaId = table.Column<int[]>(type: "integer[]", nullable: false),
-                    Cantidad = table.Column<int>(type: "integer", nullable: false),
-                    PrecioUnitario = table.Column<double>(type: "double precision", nullable: false),
-                    Total = table.Column<double>(type: "double precision", nullable: false)
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    Precio = table.Column<double>(type: "double precision", nullable: false),
+                    Descripcion = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DetallesDeVenta", x => x.Id);
+                    table.PrimaryKey("PK_Productos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,45 +42,17 @@ namespace AlejandroVertelPruebaTecnica.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Productos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    Precio = table.Column<double>(type: "double precision", nullable: false),
-                    Descripcion = table.Column<string>(type: "text", nullable: false),
-                    DetalleDeVentaId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Productos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Productos_DetallesDeVenta_DetalleDeVentaId",
-                        column: x => x.DetalleDeVentaId,
-                        principalTable: "DetallesDeVenta",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ventas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UsuarioId = table.Column<int>(type: "integer", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Total = table.Column<double>(type: "double precision", nullable: false),
-                    DetalleDeVentaId = table.Column<int>(type: "integer", nullable: true)
+                    Fecha = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ventas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Ventas_DetallesDeVenta_DetalleDeVentaId",
-                        column: x => x.DetalleDeVentaId,
-                        principalTable: "DetallesDeVenta",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Ventas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
@@ -91,15 +61,44 @@ namespace AlejandroVertelPruebaTecnica.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Productos_DetalleDeVentaId",
-                table: "Productos",
-                column: "DetalleDeVentaId");
+            migrationBuilder.CreateTable(
+                name: "DetallesDeVenta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProductoId = table.Column<int>(type: "integer", nullable: false),
+                    VentaId = table.Column<int>(type: "integer", nullable: false),
+                    Cantidad = table.Column<int>(type: "integer", nullable: false),
+                    PrecioUnitario = table.Column<double>(type: "double precision", nullable: false),
+                    Total = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetallesDeVenta", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DetallesDeVenta_Productos_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Productos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DetallesDeVenta_Ventas_VentaId",
+                        column: x => x.VentaId,
+                        principalTable: "Ventas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ventas_DetalleDeVentaId",
-                table: "Ventas",
-                column: "DetalleDeVentaId");
+                name: "IX_DetallesDeVenta_ProductoId",
+                table: "DetallesDeVenta",
+                column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetallesDeVenta_VentaId",
+                table: "DetallesDeVenta",
+                column: "VentaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ventas_UsuarioId",
@@ -111,13 +110,13 @@ namespace AlejandroVertelPruebaTecnica.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "DetallesDeVenta");
+
+            migrationBuilder.DropTable(
                 name: "Productos");
 
             migrationBuilder.DropTable(
                 name: "Ventas");
-
-            migrationBuilder.DropTable(
-                name: "DetallesDeVenta");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");

@@ -4,7 +4,7 @@ namespace AlejandroVertelPruebaReImagine.Repositories.IRepositories
 {
     public interface IDetalleDeVentaRepository
     {
-        ICollection<DetalleDeVenta> GetDetallesDeVenta(int ventaId);
+        ICollection<DetalleDeVenta> GetDetallesDeVenta(int ventaId, int? pageNumber, int? pageSize, out int totalItems);
 
         DetalleDeVenta GetDetalleDeVentaPorId(int ventaId, DetalleDeVenta detalleDeVenta);
 

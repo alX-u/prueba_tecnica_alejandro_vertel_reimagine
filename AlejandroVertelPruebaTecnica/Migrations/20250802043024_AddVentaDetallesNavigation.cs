@@ -5,7 +5,7 @@
 namespace AlejandroVertelPruebaTecnica.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateUsuarioIdIdentity : Migration
+    public partial class AddVentaDetallesNavigation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlejandroVertelPruebaReImagine.Controllers
 {
-    [Route("api/usuario")]
+    [Route("api/usuarios")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace AlejandroVertelPruebaReImagine.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/usuario
+        // GET: api/usuarios
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -40,7 +40,7 @@ namespace AlejandroVertelPruebaReImagine.Controllers
             });
         }
 
-        // GET: api/usuario/5
+        // GET: api/usuarios/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -51,18 +51,14 @@ namespace AlejandroVertelPruebaReImagine.Controllers
             return Ok(usuario);
         }
 
-        // POST: api/usuario
+        // POST: api/usuarios
         [HttpPost]
         public IActionResult Post([FromBody] CreateUsuarioDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var usuario = new Usuario
-            {
-                Nombre = dto.Nombre,
-                DNI = dto.DNI
-            };
+            var usuario = _mapper.Map<Usuario>(dto);
 
             _usuarioRepository.CreateUsuario(usuario);
             _unitOfWork.SaveChanges();
@@ -70,7 +66,7 @@ namespace AlejandroVertelPruebaReImagine.Controllers
             return CreatedAtAction(nameof(Get), new { id = usuario.Id }, usuario);
         }
 
-        // PUT: api/usuario/5
+        // PUT: api/usuarios/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -80,10 +76,7 @@ namespace AlejandroVertelPruebaReImagine.Controllers
             if (usuario == null)
                 return NotFound();
 
-            if (!string.IsNullOrWhiteSpace(dto.Nombre))
-                usuario.Nombre = dto.Nombre;
-            if (!string.IsNullOrWhiteSpace(dto.DNI))
-                usuario.DNI = dto.DNI;
+            _mapper.Map(dto, usuario);
 
             _usuarioRepository.UpdateUsuario(usuario);
             _unitOfWork.SaveChanges();
@@ -91,7 +84,7 @@ namespace AlejandroVertelPruebaReImagine.Controllers
             return Ok(usuario);
         }
 
-        // DELETE: api/usuario/5
+        // DELETE: api/usuarios/5
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Delete(int id)
